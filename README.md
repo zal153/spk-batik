@@ -87,7 +87,7 @@ Setelah itu, buka tautan aplikasi di browser Anda (biasanya `http://127.0.0.1:80
 
 Tabel berikut berisi informasi akun uji coba yang siap digunakan setelah proses seeding:
 
-| Peran (Role) | Email | Kata Sandi (Password) | Deskripsi |
+| Peran (Role) | Email | Kata Sandi (Password) |
 |---|---|---|---|
-| **Admin** | `admin@batik.com` | `password` | Mengelola kriteria, sub-kriteria, matriks perbandingan, data katalog batik alternatif, dan melihat rekap laporan. |
-| **Customer** | `customer@batik.com` | `password` | Mengisi preferensi kuesioner kriteria, melihat rekomendasi batik terbaik hasil kalkulasi AHP, dan mengelola riwayat rekomendasi. |
+| **Admin** | `admin@batik.com` | `password` | 
+| **Customer** | `customer@batik.com` | `password` |
