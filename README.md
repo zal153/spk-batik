@@ -1,58 +1,93 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# Sistem Pendukung Keputusan (SPK) Pemilihan Batik Terbaik - Toko Apollo
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+Aplikasi Sistem Pendukung Keputusan (SPK) untuk menentukan rekomendasi batik terbaik di Toko Apollo menggunakan metode **Analytical Hierarchy Process (AHP)**. Proyek ini dibangun menggunakan **Laravel 13**, **Tailwind CSS v4**, **AlpineJS**, dan **MySQL/MariaDB**.
 
-## About Laravel
+---
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+## 🛠️ Prasyarat Sistem
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+Sebelum memulai, pastikan sistem Anda telah terpasang perangkat lunak berikut:
+* **PHP >= 8.3**
+* **Composer** (Dependency Manager untuk PHP)
+* **Node.js** & **NPM** (untuk aset frontend)
+* Database Server (**MySQL** atau **MariaDB**)
+* Local Server (seperti **Laragon**, **XAMPP**, atau menggunakan `php artisan serve`)
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+---
 
-## Learning Laravel
+## 🚀 Langkah-Langkah Instalasi & Setup Awal
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+Ikuti langkah-langkah di bawah ini untuk menjalankan proyek di komputer lokal Anda:
 
-In addition, [Laracasts](https://laracasts.com) contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
-
-You can also watch bite-sized lessons with real-world projects on [Laravel Learn](https://laravel.com/learn), where you will be guided through building a Laravel application from scratch while learning PHP fundamentals.
-
-## Agentic Development
-
-Laravel's predictable structure and conventions make it ideal for AI coding agents like Claude Code, Cursor, and GitHub Copilot. Install [Laravel Boost](https://laravel.com/docs/ai) to supercharge your AI workflow:
-
+### 1. Salin / Unduh Repositori
+Buka terminal Anda, lalu masuk ke direktori web server Anda (misal `C:\laragon\www\`):
 ```bash
-composer require laravel/boost --dev
-
-php artisan boost:install
+cd c:\laragon\www\spk-batik
 ```
 
-Boost provides your agent 15+ tools and skills that help agents build Laravel applications while following best practices.
+### 2. Salin Berkas Environment Config
+Salin berkas konfigurasi `.env.example` menjadi `.env`:
+* **Melalui terminal (Windows Command Prompt / PowerShell):**
+  ```powershell
+  copy .env.example .env
+  ```
+* **Melalui terminal (Git Bash / Linux):**
+  ```bash
+  cp .env.example .env
+  ```
 
-## Contributing
+### 3. Konfigurasi Database di `.env`
+Buka berkas `.env` yang baru dibuat dengan teks editor Anda, lalu sesuaikan konfigurasi koneksi database Anda (biasanya pada Laragon atau XAMPP default-nya seperti berikut):
+```env
+DB_CONNECTION=mysql
+DB_HOST=127.0.0.1
+DB_PORT=3306
+DB_DATABASE=spk_batik
+DB_USERNAME=root
+DB_PASSWORD=
+```
+*Catatan: Pastikan Anda telah membuat database kosong bernama `spk_batik` di phpMyAdmin, Laragon Database tool, atau MySQL CLI.*
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+### 4. Pasang Dependensi PHP (Composer)
+Jalankan perintah berikut untuk mengunduh semua library PHP yang diperlukan proyek:
+```bash
+composer install
+```
 
-## Code of Conduct
+### 5. Pasang Dependensi Node (NPM)
+Pasang semua paket pustaka JavaScript/CSS (termasuk Tailwind CSS, SweetAlert2, dll.):
+```bash
+npm install
+```
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+### 6. Generate Application Key
+Buat kunci enkripsi aplikasi Laravel baru:
+```bash
+php artisan key:generate
+```
 
-## Security Vulnerabilities
+### 7. Jalankan Migrasi & Seeding Database
+Jalankan migrasi tabel database sekaligus mengisi data kriteria, matriks AHP awal, serta 16 data batik alternatif (sesuai file Excel Toko Apollo):
+```bash
+php artisan migrate:fresh --seed
+```
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+### 8. Jalankan Sistem & Aplikasi Web (Development Mode)
+Untuk menjalankan seluruh layanan pengembangan lokal secara bersamaan (termasuk Laravel Server, Queue Listener, dan Vite development server), Anda cukup menjalankan satu perintah berikut:
+```bash
+composer run dev
+```
+Setelah itu, buka tautan aplikasi di browser Anda (biasanya `http://127.0.0.1:8000` atau `http://spk-batik.test` jika menggunakan Laragon).
 
-## License
+*Catatan: Jika Anda ingin membangun aset frontend statis untuk produksi, Anda dapat menjalankan perintah `npm run build`.*
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+---
+
+## 🔑 Akun Demo / Uji Coba
+
+Tabel berikut berisi informasi akun uji coba yang siap digunakan setelah proses seeding:
+
+| Peran (Role) | Email | Kata Sandi (Password) | Deskripsi |
+|---|---|---|---|
+| **Admin** | `admin@batik.com` | `password` | Mengelola kriteria, sub-kriteria, matriks perbandingan, data katalog batik alternatif, dan melihat rekap laporan. |
+| **Customer** | `customer@batik.com` | `password` | Mengisi preferensi kuesioner kriteria, melihat rekomendasi batik terbaik hasil kalkulasi AHP, dan mengelola riwayat rekomendasi. |
